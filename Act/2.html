@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html><head>
+	<title>Деян.2</title>
+	<meta name="csrf-token" content="1zCe5f1ui5kcr3j5GpMUvDcX3PBKfhC79jS4pFFX" />
+	<link rel="shortcut icon" href="http://azbyka.ru/biblia/favicon.ico"/>
+	<link rel="stylesheet" href="http://azbyka.ru/biblia/css/main3.css"/>
+	<link rel="stylesheet" href="http://azbyka.ru/biblia/css/masha.css"/>
+	<meta property="og:title" content="Деян.2" />
+	<meta property="og:image" content="/biblia/img/apple-touch-biblia.png" />
+	<link rel="image_src" href="/biblia/img/apple-touch-biblia.png">
+	<link rel="apple-touch-icon" href="/biblia/img/apple-touch-biblia.png" />
+	<link rel="apple-touch-icon" href="/biblia/img/apple-touch-biblia60.png" sizes="60x60" />
+	<link rel="apple-touch-icon" href="/biblia/img/apple-touch-biblia76.png" sizes="76x76" />
+	<link rel="apple-touch-icon" href="/biblia/img/apple-touch-biblia120.png" sizes="120x120" />
+	<link rel="apple-touch-icon" href="/biblia/img/apple-touch-biblia152.png" sizes="152x152" />
+	<link rel="icon" type="image/png" href="/biblia/img/android-touch-biblia16.png" sizes="16x16">
+	<link rel="icon" type="image/png"  href="/biblia/img/android-touch-biblia32.png" sizes="32x32">
+	<link rel="icon" type="image/png"  href="/biblia/img/android-touch-biblia96.png" sizes="96x96">
+	<link rel="icon" type="image/png"  href="/biblia/img/android-touch-biblia128.png" sizes="128x128">
+	<script type="text/javascript" src="http://azbyka.ru/biblia/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="http://azbyka.ru/biblia/js/main.js"></script>
+	<script type="text/javascript" src="http://azbyka.ru/biblia/js/masha/masha.js"></script>
+	<script type="text/javascript" src="http://azbyka.ru/biblia/js/jquery.Dashes.js"></script>
+<!--[IF IE]>
+<script type="text/javascript" src="http://azbyka.ru/biblia/js/masha/ierange.js"></script>
+<![ENDIF]-->
+<!--[IF lt IE 9]>
+<link rel="stylesheet" href="http://azbyka.ru/biblia/css/ie.css"/>
+<![ENDIF]-->
+	<script type="text/javascript">
+		var urlBase = "http://azbyka.ru/biblia";
+		
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		
+		var timeoutHover			= null,
+			shareLinkedTextIndex	= null;
+		
+		$( document ).ready( function( ) {
+			grid( [
+				$( 'li.number', '#list-numbers' )
+				, $( 'li.verse', '#list-verses-c' ), $( 'li.verse', '#list-verses-ucs' ), $( 'li.verse', '#list-verses-r' ), $( 'li.verse', '#list-verses-g' ), $( 'li.verse', '#list-verses-l' ), $( 'li.verse', '#list-verses-a' ), $( 'li.verse', '#list-verses-n' ), $( 'li.verse', '#list-verses-s' ), $( 'li.verse', '#list-verses-p' ), $( 'li.verse', '#list-verses-t' ), $( 'li.verse', '#list-verses-o' ), $( 'li.verse', '#list-verses-k' ), $( 'li.verse', '#list-verses-h' ), $( 'li.verse', '#list-verses-m' )			] ).Update( );
+			
+			$( window ).resize( function( ) {
+				setTimeout( function( ) { grid( ).Update( ) }, 200 );
+			} );
+
+			$( '#share-popup' ).hover(
+				function( ) { window.clearTimeout( timeoutHover ); },
+				function( ) { timeoutHover = window.setTimeout( function( ) { hideSharePopup( ); }, 2000 ); }
+			);
+			
+			MaSha.instance = new MaSha( {
+				selectable: $( '#content' )[ 0 ],
+				onMark: function( ) {
+					updateSharePopupContent( );
+					showSharePopup( $( '.num' + ( this.counter - 1 ), $( this.selectable ) )[ 0 ] );
+				},
+				onUnmark: function( ) {
+					hideSharePopup( '', !0 );
+					updateSharePopupContent( );
+				}
+			} );
+			
+			updateSharePopupContent( ); 
+			$('#content').Dashes(); 
+		} );
+		
+		function updateSharePopupContent( ) {
+			var text	= encodeURI( $( 'h1' ).text( ) ),
+				url		= encodeURIComponent( location );
+			
+			$( '#share-popup .link a' ).html( location + '<ins></ins>' ).attr( 'href', location );
+			$( '#share-popup .social .tw' ).attr( 'href', 'http://twitter.com/share?url=' + url + '&text=' + text );
+			$( '#share-popup .social .fb' ).attr( 'href', 'http://www.facebook.com/share.php?u=' + url );
+			$( '#share-popup .social .vk' ).attr( 'href', 'http://vkontakte.ru/share.php?url=' + url );
+			$( '#share-popup .social .vk' ).attr( 'href', 'http://vkontakte.ru/share.php?url=' + url );
+			$( '#share-popup .social .gp' ).attr( 'href', 'https://m.google.com/app/plus/x/?v=compose&content=' + text );
+			$( '#share-popup .social .gp' ).attr( 'onclick', 'window.open(\'https://m.google.com/app/plus/x/?v=compose&content=' + text + ' - '+ url + "','gplusshare','width=450,height=300,left='+(screen.availWidth/2-225)+',top='+(screen.availHeight/2-150)+'');return false;" );
+		}
+		
+		function showSharePopup( b ) {
+			var a = $( b ).offset( );
+			
+			$( '#share-popup' ).addClass('show').css( {
+				left: a.left + 5 + $( '#share-popup' ).width( ) >= $( window ).width( ) ? $( window ).width( ) - $( '#share-popup' ).width( ) - 15 : a.left + 5,
+				top: a.top - $( '#share-popup' ).height( ) - 25
+			} );
+		}
+		
+		function hideSharePopup( b, a ) {
+			$( '#share-popup' ).removeClass( 'show' );
+		}
+		  
+	</script>
+</head><body><div class="wrap book-layout book-act">
+<div class="header"> 
+	<a title="Назад" onclick="history.back(); return false;" class="back"> </a> 
+	<div class="cloud">
+			<span class="group group-1">
+					<a href="?Gen.1" class="cloud-book-gen canonical-1" title="Пятикнижие: Книга Бытия(1)">Быт.</a>
+					<a href="?Ex.1" class="cloud-book-ex canonical-1" title="Пятикнижие: Исход(2)">Исх.</a>
+					<a href="?Lev.1" class="cloud-book-lev canonical-1" title="Пятикнижие: Левит(3)">Лев.</a>
+					<a href="?Num.1" class="cloud-book-num canonical-1" title="Пятикнижие: Числа(4)">Чис.</a>
+					<a href="?Deut.1" class="cloud-book-deut canonical-1" title="Пятикнижие: Второзаконие(5)">Втор.</a>
+				</span>
+			<span class="group group-2">
+					<a href="?Nav.1" class="cloud-book-nav canonical-1" title="Исторические книги: Книга Иисуса Навина(6)">Нав.</a>
+					<a href="?Judg.1" class="cloud-book-judg canonical-1" title="Исторические книги: Суд Книга Судей Израилевых(7)">Суд.</a>
+					<a href="?Rth.1" class="cloud-book-rth canonical-1" title="Исторические книги: Книга Руфи(8)">Руф.</a>
+					<a href="?1Sam.1" class="cloud-book-1sam canonical-1" title="Исторические книги: 1-я книга Царств(9)">1Цар.</a>
+					<a href="?2Sam.1" class="cloud-book-2sam canonical-1" title="Исторические книги: 2-я&nbsp;книга Царств(10)">2Цар.</a>
+					<a href="?1King.1" class="cloud-book-1king canonical-1" title="Исторические книги: 3-я&nbsp;книга Царств(11)">3Цар.</a>
+					<a href="?2King.1" class="cloud-book-2king canonical-1" title="Исторические книги: 4-я&nbsp;книга Царств(12)">4Цар.</a>
+					<a href="?1Chron.1" class="cloud-book-1chron canonical-1" title="Исторические книги: 1-я&nbsp;книга Паралипоменон (Хроник)(13)">1Пар.</a>
+					<a href="?2Chron.1" class="cloud-book-2chron canonical-1" title="Исторические книги: 2-я&nbsp;книга Паралипоменон (Хроник)(14)">2Пар.</a>
+					<a href="?Ezr.1" class="cloud-book-ezr canonical-1" title="Исторические книги: 1-я книга&nbsp;Ездры(15)">1Ездр.</a>
+					<a href="?Nehem.1" class="cloud-book-nehem canonical-1" title="Исторические книги: Книга Неемии(16)">Неем.</a>
+					<a href="?2Ezr.1" class="cloud-book-2ezr canonical-0" title="Исторические книги: 2-я книга&nbsp;&nbsp;Ездр(17)">2Ездр.</a>
+					<a href="?Tov.1" class="cloud-book-tov canonical-1" title="Исторические книги: Книга Товита(18)">Тов.</a>
+					<a href="?Judf.1" class="cloud-book-judf canonical-1" title="Исторические книги: Книга Иудифи(19)">Иудиф.</a>
+					<a href="?Est.1" class="cloud-book-est canonical-1" title="Исторические книги: Книга Эсфири(20)">Эсф.</a>
+					<a href="?1Mac.1" class="cloud-book-1mac canonical-0" title="Исторические книги: 1-я книга&nbsp;Маккавейская(47)">1Мак.</a>
+					<a href="?2Mac.1" class="cloud-book-2mac canonical-0" title="Исторические книги: 2-я книга&nbsp;Маккавейская(48)">2Мак.</a>
+					<a href="?3Mac.1" class="cloud-book-3mac canonical-0" title="Исторические книги: 3-я книга&nbsp;Маккавейская(49)">3Мак.</a>
+					<a href="?3Ezr.1" class="cloud-book-3ezr canonical-0" title="Исторические книги: 3-я книга Ездры(50)">3Ездр.</a>
+				</span>
+			<span class="group group-3">
+					<a href="?Job.1" class="cloud-book-job canonical-1" title="Учительные книги: Книга Иова(21)">Иов.</a>
+					<a href="?Ps.1" class="cloud-book-ps canonical-1" title="Учительные книги: Псалтирь(22)">Пс.</a>
+					<a href="?Prov.1" class="cloud-book-prov canonical-1" title="Учительные книги: Книга Притчей Соломоновых(23)">Притч.</a>
+					<a href="?Eccl.1" class="cloud-book-eccl canonical-1" title="Учительные книги: Экклезиаст(24)">Еккл.</a>
+					<a href="?Song.1" class="cloud-book-song canonical-1" title="Учительные книги: Песнь Песней Соломона(25)">Песн.</a>
+					<a href="?Solom.1" class="cloud-book-solom canonical-0" title="Учительные книги: Книга Премудрости Соломона(26)">Прем.</a>
+					<a href="?Sir.0" class="cloud-book-sir canonical-0" title="Учительные книги: Книга Премудрости Иисуса, Сына Сирахова(27)">Сир.</a>
+				</span>
+			<span class="group group-4">
+					<a href="?Is.1" class="cloud-book-is canonical-1" title="Пророческие книги: Книга пророка Исаии(28)">Ис.</a>
+					<a href="?Jer.1" class="cloud-book-jer canonical-1" title="Пророческие книги: Книга пророка Иеремии(29)">Иер.</a>
+					<a href="?Lam.1" class="cloud-book-lam canonical-1" title="Пророческие книги: Плач Иеремии(30)">Плч.</a>
+					<a href="?pJer.1" class="cloud-book-pjer canonical-0" title="Пророческие книги: Послание Иеремии(31)">Посл.Иер.</a>
+					<a href="?Bar.1" class="cloud-book-bar canonical-1" title="Пророческие книги: Варуха(32)">Вар.</a>
+					<a href="?Ezek.1" class="cloud-book-ezek canonical-1" title="Пророческие книги: Иезекииля(33)">Иез.</a>
+					<a href="?Dan.1" class="cloud-book-dan canonical-1" title="Пророческие книги: Даниила(34)">Дан.</a>
+					<a href="?Hos.1" class="cloud-book-hos canonical-1" title="Пророческие книги: Осии(35)">Ос.</a>
+					<a href="?Joel.1" class="cloud-book-joel canonical-1" title="Пророческие книги: Иоиля(36)">Иоил.</a>
+					<a href="?Am.1" class="cloud-book-am canonical-1" title="Пророческие книги: Амоса(37)">Ам.</a>
+					<a href="?Avd.1" class="cloud-book-avd canonical-1" title="Пророческие книги: Авдия(38)">Авд.</a>
+					<a href="?Jona.1" class="cloud-book-jona canonical-1" title="Пророческие книги: Ионы(39)">Ион.</a>
+					<a href="?Mic.1" class="cloud-book-mic canonical-1" title="Пророческие книги: Михея(40)">Мих.</a>
+					<a href="?Naum.1" class="cloud-book-naum canonical-1" title="Пророческие книги: Наума(41)">Наум.</a>
+					<a href="?Habak.1" class="cloud-book-habak canonical-1" title="Пророческие книги: Аввакума(42)">Авв.</a>
+					<a href="?Sofon.1" class="cloud-book-sofon canonical-1" title="Пророческие книги: Софонии(43)">Соф.</a>
+					<a href="?Hag.1" class="cloud-book-hag canonical-1" title="Пророческие книги: Аггея(44)">Агг.</a>
+					<a href="?Zah.1" class="cloud-book-zah canonical-1" title="Пророческие книги: Захарии(45)">Зах.</a>
+					<a href="?Mal.1" class="cloud-book-mal canonical-1" title="Пророческие книги: Малахии(46)">Мал.</a>
+				</span>
+			<span class="group group-6">
+					<a href="?Mt.1" class="cloud-book-mt canonical-1" title="Евангелия: Евангелие от Матфея(51)">Мф.</a>
+					<a href="?Mk.1" class="cloud-book-mk canonical-1" title="Евангелия: Евангелие от Марка(52)">Мк.</a>
+					<a href="?Lk.1" class="cloud-book-lk canonical-1" title="Евангелия: Евангелие от Луки(53)">Лк.</a>
+					<a href="?Jn.1" class="cloud-book-jn canonical-1" title="Евангелия: Евангелие от Иоанна(54)">Ин.</a>
+				</span>
+			<span class="group group-7">
+					<a href="?Act.1" class="cloud-book-act canonical-1" title="Деяния апостолов(55)">Деян.</a>
+				</span>
+			<span class="group group-8">
+					<a href="?Jac.1" class="cloud-book-jac canonical-1" title="Соборные послания: Иакова(56)">Иак.</a>
+					<a href="?1Pet.1" class="cloud-book-1pet canonical-1" title="Соборные послания: 1-е&nbsp;Петра(57)">1Пет.</a>
+					<a href="?2Pet.1" class="cloud-book-2pet canonical-1" title="Соборные послания: 2-е&nbsp;Петра(58)">2Пет.</a>
+					<a href="?1Jn.1" class="cloud-book-1jn canonical-1" title="Соборные послания: 1-е&nbsp;Иоанна(59)">1Ин.</a>
+					<a href="?2Jn.1" class="cloud-book-2jn canonical-1" title="Соборные послания: 2-е&nbsp;Иоанна(60)">2Ин.</a>
+					<a href="?3Jn.1" class="cloud-book-3jn canonical-1" title="Соборные послания: 3-е&nbsp;Иоанна(61)">3Ин.</a>
+					<a href="?Juda.1" class="cloud-book-juda canonical-1" title="Соборные послания: Послание Иуды(62)">Иуд.</a>
+				</span>
+			<span class="group group-9">
+					<a href="?Rom.1" class="cloud-book-rom canonical-1" title="Послания ап. Павла: к римлянам(63)">Рим.</a>
+					<a href="?1Cor.1" class="cloud-book-1cor canonical-1" title="Послания ап. Павла: 1-е к коринфянам(64)">1Кор.</a>
+					<a href="?2Cor.1" class="cloud-book-2cor canonical-1" title="Послания ап. Павла: 2-е к коринфянам(65)">2Кор.</a>
+					<a href="?Gal.1" class="cloud-book-gal canonical-1" title="Послания ап. Павла: к галатам(66)">Гал.</a>
+					<a href="?Eph.1" class="cloud-book-eph canonical-1" title="Послания ап. Павла: к ефесянам(67)">Еф.</a>
+					<a href="?Phil.1" class="cloud-book-phil canonical-1" title="Послания ап. Павла: к филлипийцам(68)">Флп.</a>
+					<a href="?Col.1" class="cloud-book-col canonical-1" title="Послания ап. Павла: к колоссянам(69)">Кол.</a>
+					<a href="?1Thes.1" class="cloud-book-1thes canonical-1" title="Послания ап. Павла: 1-е к солунянам(70)">1Сол.</a>
+					<a href="?2Thes.1" class="cloud-book-2thes canonical-1" title="Послания ап. Павла: 2-е к солунянам(71)">2Сол.</a>
+					<a href="?1Tim.1" class="cloud-book-1tim canonical-1" title="Послания ап. Павла: 1-е к Тимофею(72)">1Тим.</a>
+					<a href="?2Tim.1" class="cloud-book-2tim canonical-1" title="Послания ап. Павла: 2-е к Тимофею(73)">2Тим.</a>
+					<a href="?Tit.1" class="cloud-book-tit canonical-1" title="Послания ап. Павла: к Титу(74)">Тит.</a>
+					<a href="?Phlm.1" class="cloud-book-phlm canonical-1" title="Послания ап. Павла: к Филимону(75)">Флм.</a>
+					<a href="?Hebr.1" class="cloud-book-hebr canonical-1" title="Послания ап. Павла: к евреям(76)">Евр.</a>
+				</span>
+			<span class="group group-10">
+					<a href="?Apok.1" class="cloud-book-apok canonical-1" title="Откровение Иоанна Богослова(77)">Откр.</a>
+				</span>
+		</div>
+	<div class="links"><table><tr>
+		<td class="l"><a href="http://azbyka.ru/biblia">СОДЕРЖАНИЕ БИБЛИИ</a></td>
+		<td class="c"><img src="http://azbyka.ru/biblia/img/divider.gif" alt=""/></td>
+		<td class="r"><a href="http://azbyka.ru/biblia/search?in=Act">ПОИСК</a></td>
+	</tr></table></div>
+	<div class="yandex-share-wrap"><div id="yandex-share" class="yandex-share-inner"></div></div>
+<script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+<script type="text/javascript">
+$( document ).ready( function( ) {
+	if ( Ya && Ya.share ) {
+		new Ya.share( {
+			element: 'yandex-share',
+			l10n: 'ru',
+			theme: 'default',
+			elementStyle: {
+				type: 'none',
+				quickServices: [ 'yaru', 'vkontakte', 'facebook', 'twitter', 'odnoklassniki', 'moimir', 'gplus' ]
+			}
+		} );
+	}
+	function vklike() {
+		$('#vklike').css('clear', 'none');
+	}
+	setTimeout(vklike, 1000);
+} );
+
+  /*window.vkAsyncInit = function() {
+    VK.init({ apiId: 2244817  });
+	VK.Widgets.Like("vklike", {type: "button"});
+  };
+
+  setTimeout(function() {
+    var el = document.createElement("script");
+    el.type = "text/javascript";
+    el.src = "//vk.com/js/api/openapi.js";
+    el.async = true;
+    document.getElementById("vk_api_transport").appendChild(el);
+  }, 0);*/
+</script>
+
+	<div id="vk_api_transport"></div>   
+<div style="margin-right:-6px;z-index:999;float:right;" id="vklike"></div> 	<div class="h1"><h1>Деяния апостолов, 2</h1></div>
+	<div class="nav-chapters-2"><ul>
+		<li class="prev-chapter">
+									<a href="?Act.1&amp;cr&amp;ucs">Деян.1</a>
+							</li>
+		<li class="cur-chapter">
+									<a href="?Act.2&amp;cr&amp;ucs">Деян.2</a>
+							</li>
+		<li class="next-chapter">
+									<a href="?Act.3&amp;cr&amp;ucs">Деян.3</a>
+							</li>
+	</ul></div>
+</div>
+
+<div class="sidebar-l">
+	<div class="chapters_title">Деяния</div>
+	<div class="chapters_wrap"><table><tr>
+			<td><ul class="chapters">
+					<li><a href="?Act.1&amp;ucs" class="selected-0">1</a></li>
+					<li><a href="?Act.2&amp;ucs" class="selected-1">2</a></li>
+					<li><a href="?Act.3&amp;ucs" class="selected-0">3</a></li>
+					<li><a href="?Act.4&amp;ucs" class="selected-0">4</a></li>
+					<li><a href="?Act.5&amp;ucs" class="selected-0">5</a></li>
+					<li><a href="?Act.6&amp;ucs" class="selected-0">6</a></li>
+					<li><a href="?Act.7&amp;ucs" class="selected-0">7</a></li>
+					<li><a href="?Act.8&amp;ucs" class="selected-0">8</a></li>
+					<li><a href="?Act.9&amp;ucs" class="selected-0">9</a></li>
+					<li><a href="?Act.10&amp;ucs" class="selected-0">10</a></li>
+					<li><a href="?Act.11&amp;ucs" class="selected-0">11</a></li>
+					<li><a href="?Act.12&amp;ucs" class="selected-0">12</a></li>
+					<li><a href="?Act.13&amp;ucs" class="selected-0">13</a></li>
+					<li><a href="?Act.14&amp;ucs" class="selected-0">14</a></li>
+				</ul></td>
+			<td><ul class="chapters">
+					<li><a href="?Act.15&amp;ucs" class="selected-0">15</a></li>
+					<li><a href="?Act.16&amp;ucs" class="selected-0">16</a></li>
+					<li><a href="?Act.17&amp;ucs" class="selected-0">17</a></li>
+					<li><a href="?Act.18&amp;ucs" class="selected-0">18</a></li>
+					<li><a href="?Act.19&amp;ucs" class="selected-0">19</a></li>
+					<li><a href="?Act.20&amp;ucs" class="selected-0">20</a></li>
+					<li><a href="?Act.21&amp;ucs" class="selected-0">21</a></li>
+					<li><a href="?Act.22&amp;ucs" class="selected-0">22</a></li>
+					<li><a href="?Act.23&amp;ucs" class="selected-0">23</a></li>
+					<li><a href="?Act.24&amp;ucs" class="selected-0">24</a></li>
+					<li><a href="?Act.25&amp;ucs" class="selected-0">25</a></li>
+					<li><a href="?Act.26&amp;ucs" class="selected-0">26</a></li>
+					<li><a href="?Act.27&amp;ucs" class="selected-0">27</a></li>
+					<li><a href="?Act.28&amp;ucs" class="selected-0">28</a></li>
+				</ul></td>
+		</tr></table></div>
+</div>
+
+<div class="sidebar-r">
+	<div class="about-link"><a href="/otechnik/?Biblia/oBibliiAV">Об этой программе</a></div>
+	<div class="img-divider">&nbsp;</div>
+	<div class="about-link"><a href="/otechnik/">Библиотека отцов Церкви</a></div>
+	<div class="interpret_wrap">
+	<div class="interpret_header">Толкования</div>
+	<ul class="interprets">
+			<li><a href="/otechnik/Feofilakt_Bolgarskij/tolkovanie-na-dejanija-svjatykh-apostolov/2">блж.Феофилакт Болг.</a></li>
+			<li><a href="/otechnik/Lopuhin/tolkovaja_biblija_55/2">А.Лопухин</a></li>
+			<li><a href="/otechnik/Nikifor_Feotokis/tolkovanie-voskresnykh-apostolov-s-nravouchitelnymi-besedami/8">Никиф.(Феотокис)</a></li>
+			<li><a href="/otechnik/Biblia/kommentarii-k-novomu-zavetu/5_2">У.Баркли</a></li>
+			<li><a href="/otechnik/Aleksandr_Ivanov/rukovodstvo-k-izucheniyu-novogo-zaveta-apostol-ivanov/1_12">А. Иванов</a></li>
+		</ul></div>
+	<ul class="langs">
+	<div class="interpret_header">Добавить языки</div>
+					<li id="lang-c" class="lang-link lang-visible-1"><a href="?Act.2&amp;ucs">Церковнославянский</a></li>
+										<li id="lang-r" class="lang-link lang-visible-1"><a href="?Act.2&amp;ucs">Синодальный</a></li>
+							<li id="lang-g" class="lang-link lang-visible-0"><a href="?Act.2&amp;cgr&amp;ucs">Греческий</a></li>
+							<li id="lang-l" class="lang-link lang-visible-0"><a href="?Act.2&amp;clr&amp;ucs">Латинский</a></li>
+							<li id="lang-a" class="lang-link lang-visible-0"><a href="?Act.2&amp;acr&amp;ucs">Английский (NKJV)</a></li>
+							<li id="lang-n" class="lang-link lang-visible-0"><a href="?Act.2&amp;cnr&amp;ucs">Арабский</a></li>
+							<li id="lang-s" class="lang-link lang-visible-0"><a href="?Act.2&amp;crs&amp;ucs">Киргизский</a></li>
+							<li id="lang-p" class="lang-link lang-visible-0"><a href="?Act.2&amp;cpr&amp;ucs">Таджикский</a></li>
+							<li id="lang-t" class="lang-link lang-visible-0"><a href="?Act.2&amp;crt&amp;ucs">Татарский</a></li>
+							<li id="lang-o" class="lang-link lang-visible-0"><a href="?Act.2&amp;cor&amp;ucs">Узбекский</a></li>
+							<li id="lang-k" class="lang-link lang-visible-0"><a href="?Act.2&amp;ckr&amp;ucs">Украинский (Огиенко)</a></li>
+							<li id="lang-h" class="lang-link lang-visible-0"><a href="?Act.2&amp;chr&amp;ucs">Французский (LSG)</a></li>
+							<li id="lang-m" class="lang-link lang-visible-0"><a href="?Act.2&amp;cmr&amp;ucs">Die Gute Nachricht Bibel</a></li>
+				</ul>
+</div>
+
+<div id="content" class="content"><table><tr>
+	<td class="col-numbers">
+<div class="numbers-header">&nbsp;</div>
+<ul id="list-numbers" class="numbers">
+<li class="chapter-begin">&nbsp;</li>
+	<li id="line-0" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14693" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Lev.23:16">Лев.<b>23</b>:16</a>; <a target="_blank" href="http://azbyka.ru/biblia?Deut.16:9">Втор.<b>16</b>:9</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14693); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:1</span>
+			</div></li>
+	<li id="line-1" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14694" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Mt.3:11">Мф.<b>3</b>:11</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.1:5">Деян.<b>1</b>:5</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.11:15">Деян.<b>11</b>:15</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.19:6">Деян.<b>19</b>:6</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14694); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:2</span>
+			</div></li>
+	<li id="line-2" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:3</span>
+			</div></li>
+	<li id="line-3" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14695" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Mk.16:17">Мк.<b>16</b>:17</a>; <a target="_blank" href="http://azbyka.ru/biblia?1Cor.12:10,28">1Кор.<b>12</b>:10, 28</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14695); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:4</span>
+			</div></li>
+	<li id="line-4" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:5</span>
+			</div></li>
+	<li id="line-5" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:6</span>
+			</div></li>
+	<li id="line-6" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:7</span>
+			</div></li>
+	<li id="line-7" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:8</span>
+			</div></li>
+	<li id="line-8" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:9</span>
+			</div></li>
+	<li id="line-9" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:10</span>
+			</div></li>
+	<li id="line-10" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:11</span>
+			</div></li>
+	<li id="line-11" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:12</span>
+			</div></li>
+	<li id="line-12" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:13</span>
+			</div></li>
+	<li id="line-13" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:14</span>
+			</div></li>
+	<li id="line-14" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:15</span>
+			</div></li>
+	<li id="line-15" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:16</span>
+			</div></li>
+	<li id="line-16" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14696" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Is.44:3">Ис.<b>44</b>:3</a>; <a target="_blank" href="http://azbyka.ru/biblia?Zah.12:10">Зах.<b>12</b>:10</a>; <a target="_blank" href="http://azbyka.ru/biblia?Jn.7:39">Ин.<b>7</b>:39</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.11:28">Деян.<b>11</b>:28</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.16:9">Деян.<b>16</b>:9</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.21:9">Деян.<b>21</b>:9</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14696); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:17</span>
+			</div></li>
+	<li id="line-17" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:18</span>
+			</div></li>
+	<li id="line-18" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:19</span>
+			</div></li>
+	<li id="line-19" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:20</span>
+			</div></li>
+	<li id="line-20" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14697" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Joel.2:28-32">Иоил.<b>2</b>:28-32</a>; <a target="_blank" href="http://azbyka.ru/biblia?Rom.10:13">Рим.<b>10</b>:13</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14697); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:21</span>
+			</div></li>
+	<li id="line-21" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:22</span>
+			</div></li>
+	<li id="line-22" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:23</span>
+			</div></li>
+	<li id="line-23" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14698" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Jn.10:18">Ин.<b>10</b>:18</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.3:15">Деян.<b>3</b>:15</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.4:10">Деян.<b>4</b>:10</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14698); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:24</span>
+			</div></li>
+	<li id="line-24" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:25</span>
+			</div></li>
+	<li id="line-25" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:26</span>
+			</div></li>
+	<li id="line-26" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:27</span>
+			</div></li>
+	<li id="line-27" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14699" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Ps.15:8-11">Пс.<b>15</b>:8-11</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14699); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:28</span>
+			</div></li>
+	<li id="line-28" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14700" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?1King.2:10">3Цар.<b>2</b>:10</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.13:36">Деян.<b>13</b>:36</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14700); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:29</span>
+			</div></li>
+	<li id="line-29" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14701" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?2Sam.7:12">2Цар.<b>7</b>:12</a>; <a target="_blank" href="http://azbyka.ru/biblia?Ps.131:11">Пс.<b>131</b>:11</a>; <a target="_blank" href="http://azbyka.ru/biblia?2Sam.7:19">2Цар.<b>7</b>:19</a>; <a target="_blank" href="http://azbyka.ru/biblia?2Sam.23:2">2Цар.<b>23</b>:2</a>; <a target="_blank" href="http://azbyka.ru/biblia?Lk.1:69">Лк.<b>1</b>:69</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14701); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:30</span>
+			</div></li>
+	<li id="line-30" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14702" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Ps.15:10">Пс.<b>15</b>:10</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.13:37">Деян.<b>13</b>:37</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14702); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:31</span>
+			</div></li>
+	<li id="line-31" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14703" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Jn.15:27">Ин.<b>15</b>:27</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.3:15">Деян.<b>3</b>:15</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14703); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:32</span>
+			</div></li>
+	<li id="line-32" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14704" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Jn.14:16">Ин.<b>14</b>:16</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14704); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:33</span>
+			</div></li>
+	<li id="line-33" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14705" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Mt.22:44">Мф.<b>22</b>:44</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14705); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:34</span>
+			</div></li>
+	<li id="line-34" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14706" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Ps.109:1">Пс.<b>109</b>:1</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14706); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:35</span>
+			</div></li>
+	<li id="line-35" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14707" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Mt.28:18">Мф.<b>28</b>:18</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14707); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:36</span>
+			</div></li>
+	<li id="line-36" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:37</span>
+			</div></li>
+	<li id="line-37" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:38</span>
+			</div></li>
+	<li id="line-38" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14708" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Jer.31:34">Иер.<b>31</b>:34</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.3:25">Деян.<b>3</b>:25</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14708); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:39</span>
+			</div></li>
+	<li id="line-39" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:40</span>
+			</div></li>
+	<li id="line-40" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:41</span>
+			</div></li>
+	<li id="line-41" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:42</span>
+			</div></li>
+	<li id="line-42" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:43</span>
+			</div></li>
+	<li id="line-43" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14709" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Act.4:32">Деян.<b>4</b>:32</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14709); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:44</span>
+			</div></li>
+	<li id="line-44" class="number visible-1"><div class="number-inner">
+				<span class="verse-fullnumber">2:45</span>
+			</div></li>
+	<li id="line-45" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14710" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Lk.24:53">Лк.<b>24</b>:53</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.20:11">Деян.<b>20</b>:11</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14710); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:46</span>
+			</div></li>
+	<li id="line-46" class="number visible-1"><div class="number-inner">
+				<span id="parallel-14711" class="parallel"><i>см. тж.</i> <a target="_blank" href="http://azbyka.ru/biblia?Act.5:14">Деян.<b>5</b>:14</a>; <a target="_blank" href="http://azbyka.ru/biblia?Act.11:21">Деян.<b>11</b>:21</a></span>
+		<a class="parallel_toggle" href="#" onclick="grid().ToggleParallel(14711); return false;">||</a>&nbsp;<span class="verse-fullnumber">2:47</span>
+			</div></li>
+<li class="chapter-end">&nbsp;</li>
+</ul>
+	</td>
+		<td id="column-lang-c" class="column col-lang-c col-visible-1 has-switcher-1">
+		<div class="column-header">
+					<ul id="sublang-switcher-c" class="sublang-switcher">
+							<li id="switcher-c-ucs" class="switcher-ucs switcher-selected-1"><a href="?Act.2&amp;ucs">ц.сл.(шр.)</a></li>
+							<li id="switcher-c-c" class="switcher-c switcher-selected-0"><a href="?Act.2">р.б.</a></li>
+						</ul>
+					<input id="cb-c" type="checkbox" name="c" onchange="langs( ).toggle( '?Act.2&amp;r&amp;ucs' );" checked="checked"/>
+			<label for="cb-c" class="lang-label">Церковнославянский</label>
+		</div>
+		<ul id="list-verses-c" class="verses modifier-ucs" style="display: none;">
+					<li class="verse visible-1"><div class="verse-inner">И егдá скончавáшася днíе пятьдеся́тницы, бѣ́ша вси́ апóстоли единодýшно вкýпѣ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И бы́сть внезáпу съ небесé шýмъ, я́ко нос<nobr>и́</nobr>му дыхáнiю бýрну, и испóлни вéсь дóмъ, идѣ́же бя́ху сѣдя́ще:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">и яв<nobr>и́</nobr>шася <nobr>и́</nobr>мъ раздѣлéни язы́цы я́ко óгнен­ни, сѣ́де же на ед<nobr>и́</nobr>нѣмъ кó­емждо <nobr>и́</nobr>хъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И испóлнишася вси́ Дýха свя́та и начáша глагóлати ины́ми язы́ки, я́коже Дýхъ дая́ше <nobr>и́</nobr>мъ провѣщавáти.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Бя́ху же во Иерусал<nobr>и́</nobr>мѣ живýщiи Иудéе, мýжiе благоговѣ́йнiи, от­ всегó язы́ка, <nobr>и́</nobr>же подъ небесéмъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Бы́в­шу же глáсу семý, сн<nobr>и́</nobr>деся нарóдъ и смятéся, я́ко слы́шаху ед<nobr>и́</nobr>нъ кíйждо <nobr>и́</nobr>хъ сво­<nobr>и́</nobr>мъ язы́комъ глагóлющихъ <nobr>и́</nobr>хъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Дивля́хуся же вси́ и чудя́хуся, глагóлюще дрýгъ ко дрýгу: не сé ли, вси́ сíи сýть глагóлющiи Галилéане?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">и кáко мы́ слы́шимъ кíйждо свóй язы́къ нáшъ, въ нéмже род<nobr>и́</nobr>хомся,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">пáрѳяне и м<nobr>и́</nobr>дяне и Елами́те, и живýщiи въ Месо­потáмiи, во Иудéи же и каппадокíи, въ пóнтѣ и во Асíи,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">во фригíи же и памфилíи, во Еги́птѣ и странáхъ Ливи́и, я́же при­­ киринíи, и при­­ходя́щiи р<nobr>и́</nobr>мляне, Иудéе же и при­­шéлцы,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">кр<nobr>и́</nobr>тяне и Арáвляне, слы́шимъ глагóлющихъ <nobr>и́</nobr>хъ нáшими язы́ки вели́чiя Бóжiя?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Ужасáхуся же вси́ и недо­умѣвáхуся, дрýгъ ко дрýгу глагóлюще: чтó ýбо хóщетъ сié бы́ти?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Инíи же ругáющеся глагóлаху, я́ко винóмъ испóлнени сýть.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">[<span class="zachala">Зач. 4.</span>] Стáвъ же пéтръ со едино­нá­де­сятьми, воз­дв<nobr>и́</nobr>же глáсъ свóй и речé <nobr>и́</nobr>мъ: мýжiе Иудéйстiи и живýщiи во Иерусал<nobr>и́</nobr>мѣ вси́, сié вáмъ разýмно да бýдетъ, и внуш<nobr>и́</nobr>те глагóлы моя́:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">не бó, я́коже вы́ непщýете, сíи пiя́ни сýть, éсть бо чáсъ трéтiй днé:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">но сié éсть рѣчéн­ное прорóкомъ Ио<nobr>и́</nobr>лемъ:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">и бýдетъ въ послѣ́днiя дни́, глагóлетъ Госпóдь, излiю́ от­ Дýха мо­егó на вся́ку плóть, и прорекýтъ сы́нове вáши и дщéри вáшя, и ю́ноши вáши видѣ́нiя ýзрятъ, и стáрцы вáши сóнiя в<nobr>и́</nobr>дятъ:</div></li>
+				<li class="verse visible-1"><div class="verse-inner"><nobr>и́</nobr>бо на рабы́ моя́ и на рабы́ни моя́ во дни́ о́ны излiю́ от­ Дýха мо­егó, и прорекýтъ:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">и дáмъ чудесá на небеси́ горѣ́ и знáменiя на земли́ н<nobr>и́</nobr>зу, крóвь и óгнь и курéнiе ды́ма:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">сóлнце прелож<nobr>и́</nobr>т­ся во тмý, и лунá въ крóвь, прéжде дáже не прiити́ дню́ Госпóдню вел<nobr>и́</nobr>кому и просвѣщéн­ному:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">и бýдетъ, вся́къ, <nobr>и́</nobr>же áще при­­зовéтъ <nobr>и́</nobr>мя Госпóдне, спасéт­ся.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">[<span class="zachala">Зач. 5.</span>] Мýжiе Изрáилстiи, послýшайте словéсъ с<nobr>и́</nobr>хъ: Иисýса назорéа, мýжа от­ Бóга извѣ́­ст­вован­на въ вáсъ с<nobr>и́</nobr>лами и чудесы́ и знáменiи, я́же сотвори́ тѣ́мъ Бóгъ посредѣ́ вáсъ, я́коже и сáми вѣ́сте,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">сегó нарековáн­нымъ совѣ́томъ и проразумѣ́нiемъ Бóжiимъ прéдана прiéмше, рукáми беззакóн­ныхъ при­­гвóждше уб<nobr>и́</nobr>сте:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">егóже Бóгъ воскреси́, разрѣш<nobr>и́</nobr>въ болѣ́зни смéртныя, я́коже не бя́ше мóщно держ<nobr>и́</nobr>му бы́ти емý от­ нея́.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Дав<nobr>и́</nobr>дъ бо глагóлетъ о нéмъ: предзрѣ́хъ Гóспода предо мнóю вы́ну, я́ко о деснýю менé éсть, да не подв<nobr>и́</nobr>жуся:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">сегó рáди воз­весел<nobr>и́</nobr>ся сéрдце моé, и воз­рáдовася язы́къ мóй: ещé же и плóть моя́ всел<nobr>и́</nobr>т­ся на уповáнiи,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">я́ко не остáвиши души́ мо­ея́ во áдѣ, нижé дáси преподобному тво­емý в<nobr>и́</nobr>дѣти истлѣ́нiя:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">сказáлъ ми́ еси́ пути́ животá: испóлниши мя́ весéлiя съ лицéмъ тво­<nobr>и́</nobr>мъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Мýжiе брáтiе, достóитъ рещи́ съ дерзновéнiемъ къ вáмъ о патрiáрсѣ Дав<nobr>и́</nobr>дѣ, я́ко и ýмре и погребéнъ бы́сть, и грóбъ егó éсть въ нáсъ дáже до днé сегó:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">прорóкъ ýбо сы́й и вѣ́дый, я́ко кля́твою кля́т­ся емý Бóгъ от­ плодá чрéслъ егó по плóти воз­дв<nobr>и́</nobr>гнути Христá и посад<nobr>и́</nobr>ти егó на престóлѣ егó,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">предв<nobr>и́</nobr>дѣвъ глагóла о воскресéнiи Христóвѣ, я́ко не остáвися душá егó во áдѣ, ни плóть егó в<nobr>и́</nobr>дѣ истлѣ́нiя.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Сегó Иисýса воскреси́ Бóгъ, емýже вси́ мы́ есмы́ свидѣ́телiе.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Десн<nobr>и́</nobr>цею ýбо Бóжiею воз­несéся, и обѣтовáнiе святáго Дýха прiéмь от­ Отцá, излiя́ сié, éже вы́ ны́нѣ в<nobr>и́</nobr>дите и слы́шите.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Не бó Дав<nobr>и́</nobr>дъ взы́де на небесá, глагóлетъ бо сáмъ: речé Госпóдь Гóсподеви мо­емý: сѣди́ о деснýю менé,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">дóндеже положý враги́ твоя́ поднóжiе нóгъ тво­<nobr>и́</nobr>хъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Твéрдо ýбо да разумѣ́етъ вéсь дóмъ Изрáилевъ, я́ко и Гóспода и Христá егó Бóгъ сотвор<nobr>и́</nobr>лъ éсть, сегó Иисýса, егóже вы́ распя́сте.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Слы́шав­ше же умил<nobr>и́</nobr>шася сéрдцемъ и рѣ́ша къ Петрý и прóчымъ апóстоломъ: чтó сотвор<nobr>и́</nobr>мъ, мýжiе брáтiе?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">[<span class="zachala">Зач. 6.</span>] Пéтръ же речé къ ни́мъ: покáйтеся, и да крест<nobr>и́</nobr>т­ся кíйждо вáсъ во <nobr>и́</nobr>мя Иисýса Христá во оставлéнiе грѣхóвъ: и прiи́мете дáръ святáго Дýха:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">вáмъ бо éсть обѣтовáнiе и чáдомъ вáшымъ и всѣ́мъ дáльнимъ, ели́ки áще при­­зовéтъ Госпóдь Бóгъ нáшъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И ины́ми словесы́ мнóжайшими засвидѣ́тел­ст­воваше и моля́ше я́, глагóля: спас<nobr>и́</nobr>теся от­ рóда стропт<nobr>и́</nobr>ваго сегó.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И́же ýбо любéзно прiя́ша слóво егó, крест<nobr>и́</nobr>шася: и при­­лож<nobr>и́</nobr>шася въ дéнь тóй дýшъ я́ко три́ ты́сящы:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">бя́ху же терпя́ще во учéнiи апóстолъ и во общéнiи и въ преломлéнiи хлѣ́ба и въ мол<nobr>и́</nobr>твахъ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Бы́сть же на вся́кой души́ стрáхъ: мнóга бо чудесá и знáменiя апóстолы бы́ша во Иерусал<nobr>и́</nobr>мѣ.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Стрáхъ же вéлiй бя́ше на всѣ́хъ <nobr>и́</nobr>хъ. Вс<nobr>и́</nobr> же вѣ́ровав­шiи бя́ху вкýпѣ и имя́ху вся́ о́бща:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">и стяжáнiя и имѣ́нiя продая́ху, и раздая́ху всѣ́мъ, егóже áще ктó трéбоваше:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">по вся́ же дни́ терпя́ще единодýшно въ цéркви и ломя́ще по домóмъ хлѣ́бъ, прiимáху п<nobr>и́</nobr>щу въ рáдости и въ простотѣ́ сéрдца,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">хвáляще Бóга и имýще благодáть у всѣ́хъ людíй. Госпóдь же при­­лагá­ше по вся́ дни́ цéркви спасáющыяся.</div></li>
+					</ul>
+					<ul id="list-verses-ucs" class="verses sublang lang-ucs" >
+								<li class="verse visible-1"><div class="verse-inner">И# є3гдA скончавaшасz днjе пzтьдесsтницы, бёша вси2 ґпcли є3динодyшнw вкyпэ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">И# бhсть внезaпу съ небесE шyмъ, ћкw носи1му дыхaнію бyрну, и3 и3сп0лни вeсь д0мъ, и3дёже бsху сэдsще:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и3 kви1шасz и5мъ раздэлeни љзhцы ћкw џгнен­ни, сёде же на є3ди1нэмъ к0­емждо и4хъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">И# и3сп0лнишасz вси2 дх7а ст7а и3 начaша глаг0лати и3нhми љзhки, ћкоже дх7ъ даsше и5мъ провэщавaти.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Бsху же во їеrли1мэ живyщіи їудeє, мyжіе благоговёйніи, t­ всегw2 kзhка, и4же под8 небесeмъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Бhв­шу же глaсу семY, сни1десz нар0дъ и3 смzтeсz, ћкw слhшаху є3ди1нъ кjйждо и4хъ сво­и1мъ љзhкомъ глаг0лющихъ и5хъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Дивлsхусz же вси2 и3 чудsхусz, глаг0люще дрyгъ ко дрyгу: не сe ли, вси2 сjи сyть глаг0лющіи галілeане;</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и3 кaкw мы2 слhшимъ кjйждо св0й љзhкъ нaшъ, въ нeмже роди1хомсz,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">пaрfzне и3 ми1дzне и3 є3ламjтє, и3 живyщіи въ месопотaміи, во їудeи же и3 каппадокjи, въ п0нтэ и3 во ґсjи,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">во фрmгjи же и3 памфmлjи, во є3гЂптэ и3 странaхъ лівЂи, ћже при­ кmринjи, и3 при­ходsщіи ри1млzне, їудeє же и3 при­шeлцы,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">кри1тzне и3 ґрaвлzне, слhшимъ глаг0лющихъ и5хъ нaшими љзы6ки вели6чіz б9іz;</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Ўжасaхусz же вси2 и3 недо­умэвaхусz, дрyгъ ко дрyгу глаг0люще: что2 ќбw х0щетъ сіE бhти;</div></li>
+						<li class="verse visible-1"><div class="verse-inner">И#нjи же ругaющесz глаг0лаху, ћкw він0мъ и3сп0лнени сyть.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">[(ҐЗа? 4.Ґ)] Стaвъ же пeтръ со є3дино­нa­де­сzтьми, воз­дви1же глaсъ св0й и3 речE и5мъ: мyжіе їудeйстіи и3 живyщіи во їеrли1мэ вси2, сіE вaмъ разyмно да бyдетъ, и3 внуши1те глаг0лы мо‰:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">не бо2, ћкоже вы2 непщyете, сjи піsни сyть, є4сть бо чaсъ трeтій днE:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">но сіE є4сть рэчeн­ное прbр0комъ їwи1лемъ:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и3 бyдетъ въ послBдніz дни6, гlетъ гDь, и3злію2 t­ дх7а мо­егw2 на всsку пл0ть, и3 прорекyтъ сhнове вaши и3 дщє1ри вaшz, и3 ю4нwши вaши видBніz ќзрzтъ, и3 стaрцы вaши сHніz ви1дzтъ:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и4бо на рабы6 мо‰ и3 на рабы6ни мо‰ во дни6 њ1ны и3злію2 t­ дх7а мо­егw2, и3 прорекyтъ:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и3 дaмъ чудесA на небеси2 горЁ и3 знaмєніz на земли2 ни1зу, кр0вь и3 џгнь и3 курeніе дhма:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">с0лнце преложи1т­сz во тмY, и3 лунA въ кр0вь, прeжде дaже не пріити2 дню2 гDню вели1кому и3 просвэщeн­ному:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и3 бyдетъ, всsкъ, и4же а4ще при­зовeтъ и4мz гDне, сп7сeт­сz.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">[(ҐЗа? 5.Ґ)] Мyжіе їи7лстіи, послyшайте словeсъ си1хъ: їи7са назwрeа, мyжа t­ бг7а и3звё­ст­вован­на въ вaсъ си1лами и3 чудесы2 и3 знaмєніи, ±же сотвори2 тёмъ бг7ъ посредЁ вaсъ, ћкоже и3 сaми вёсте,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">сего2 нарековaн­нымъ совётомъ и3 проразумёніемъ б9іимъ прeдана пріeмше, рукaми беззак0н­ныхъ при­гв0ждше ўби1сте:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">є3г0же бг7ъ воскр7си2, разрэши1въ бwлёзни смє1ртныz, ћкоже не бsше м0щно держи1му бhти є3мY t­ неS.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Дв7дъ бо глаг0летъ њ нeмъ: предзрёхъ гDа предо мн0ю вhну, ћкw њ деснyю менє2 є4сть, да не подви1жусz:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">сегw2 рaди воз­весели1сz сeрдце моE, и3 воз­рaдовасz љзhкъ м0й: є3щe же и3 пл0ть моS всели1т­сz на ўповaніи,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">ћкw не њстaвиши души2 мо­еS во а4дэ, нижE дaси прпdбному тво­емY ви1дэти и3стлёніz:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">сказaлъ ми2 є3си2 пути6 животA: и3сп0лниши мS весeліz съ лицeмъ тво­и1мъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Мyжіе брaтіе, дост0итъ рещи2 съ дерзновeніемъ къ вaмъ њ патріaрсэ дв7дэ, ћкw и3 ќмре и3 погребeнъ бhсть, и3 гр0бъ є3гw2 є4сть въ нaсъ дaже до днE сегw2:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">прbр0къ u5бо сhй и3 вёдый, ћкw клsтвою клsт­сz є3мY бг7ъ t­ плодA чрeслъ є3гw2 по пlти воз­дви1гнути хrтA и3 посади1ти є3го2 на прест0лэ є3гw2,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">предви1дэвъ глаг0ла њ воскrніи хrт0вэ, ћкw не њстaвисz дш7A є3гw2 во а4дэ, ни пlть є3гw2 ви1дэ и3стлёніz.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Сего2 їи7са воскр7си2 бг7ъ, є3мyже вси2 мы2 є3смы2 свидётеліе.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Десни1цею u5бо б9іею воз­несeсz, и3 њбэтовaніе ст7aгw дх7а пріeмь t­ nц7A, и3зліS сіE, є4же вы2 н­н7э ви1дите и3 слhшите.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Не бо2 дв7дъ взhде на нб7сA, глаг0летъ бо сaмъ: речE гDь гDеви мо­емY: сэди2 њ деснyю менє2,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">д0ндеже положY враги2 тво‰ подн0жіе н0гъ тво­и1хъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Твeрдw u5бо да разумёетъ вeсь д0мъ їи7левъ, ћкw и3 гDа и3 хrтA є3го2 бг7ъ сотвори1лъ є4сть, сего2 їи7са, є3г0же вы2 распsсте.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Слhшав­ше же ўмили1шасz сeрдцемъ и3 рёша къ ПетрY и3 пр0чымъ ґпcлwмъ: что2 сотвори1мъ, мyжіе брaтіе;</div></li>
+						<li class="verse visible-1"><div class="verse-inner">[(ҐЗа? 6.Ґ)] Пeтръ же речE къ ни6мъ: покaйтесz, и3 да крести1т­сz кjйждо вaсъ во и4мz їи7са хrтA во њставлeніе грэхHвъ: и3 пріи1мете дaръ ст7aгw дх7а:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">вaмъ бо є4сть њбэтовaніе и3 чaдwмъ вaшымъ и3 всBмъ д†льнимъ, є3ли6ки а4ще при­зовeтъ гDь бг7ъ нaшъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">И# и3нhми словесы2 мн0жайшими засвидётел­ст­воваше и3 молsше |, глаг0лz: спаси1тесz t­ р0да стропти1вагw сегw2.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">И%же u5бо любeзнw пріsша сл0во є3гw2, крести1шасz: и3 при­ложи1шасz въ дeнь т0й дyшъ ћкw три2 тhсzщы:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">бsху же терпsще во ўчeніи ґпcлъ и3 во nбщeніи и3 въ преломлeніи хлёба и3 въ моли1твахъ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Бhсть же на всsкой души2 стрaхъ: мнHга бо чудесA и3 знaмєніz ґпcлы бhша во їеrли1мэ.</div></li>
+						<li class="verse visible-1"><div class="verse-inner">Стрaхъ же вeлій бsше на всёхъ и4хъ. Вси1 же вёровав­шіи бsху вкyпэ и3 и3мsху вс‰ њ1бща:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">и3 стzж†ніz и3 и3мёніz продаsху, и3 раздаsху всBмъ, є3гHже а4ще кто2 трeбоваше:</div></li>
+						<li class="verse visible-1"><div class="verse-inner">по вс‰ же дни6 терпsще є3динодyшнw въ цeркви и3 ломsще по домHмъ хлёбъ, пріимaху пи1щу въ рaдости и3 въ простотЁ сeрдца,</div></li>
+						<li class="verse visible-1"><div class="verse-inner">хвaлzще бг7а и3 и3мyще благодaть ў всёхъ людjй. ГDь же при­лагa­ше по вс‰ дни6 цр7кви сп7сaющыzсz.</div></li>
+							</ul>
+				</td>
+				<td id="column-lang-r" class="column col-lang-r col-visible-1 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-r" type="checkbox" name="r" onchange="langs( ).toggle( '?Act.2&amp;c&amp;ucs' );" checked="checked"/>
+			<label for="cb-r" class="lang-label">Синодальный</label>
+		</div>
+		<ul id="list-verses-r" class="verses">
+					<li class="verse visible-1"><div class="verse-inner">При наступлении дня Пятидесятницы все они были единодушно вместе.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И внезапно сделался шум с неба, как бы от несущегося сильного ветра, и наполнил весь дом, где они находились.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И явились им разделяющиеся языки, как бы огненные, и почили по одному на каждом из них.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И исполнились все Духа Святаго, и начали говорить на иных языках, как Дух давал им провещевать.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">В Иерусалиме же находились Иудеи, люди набожные, из всякого народа под небом.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Когда сделался этот шум, собрался народ, и пришел в смятение, ибо каждый слышал их говорящих его наречием.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И все изумлялись и дивились, говоря между собою: сии говорящие не все ли Галилеяне?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Как же мы слышим каждый собственное наречие, в котором родились.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Парфяне, и Мидяне, и Еламиты, и жители Месопотамии, Иудеи и Каппадокии, Понта и Асии,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Фригии и Памфилии, Египта и частей Ливии, прилежащих к Киринее, и пришедшие из Рима, Иудеи и <span class=snosCit>прозелиты</span><font color=green>*</font>, <span class=snos><font color=green>//*</font>Обращенные из язычников.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">критяне и аравитяне, слышим их нашими языками говорящих о великих <span class=cyn>делах</span> Божиих?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И изумлялись все и, недоумевая, говорили друг другу: что это значит?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">А иные, насмехаясь, говорили: они напились сладкого вина.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Петр же, став с одиннадцатью, возвысил голос свой и возгласил им: мужи Иудейские, и все живущие в Иерусалиме! сие да будет вам известно, и внимайте словам моим:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">они не пьяны, как вы думаете, ибо теперь третий час дня;</div></li>
+				<li class="verse visible-1"><div class="verse-inner">но это есть предреченное пророком Иоилем:</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И будет в последние дни, говорит Бог, излию от Духа Моего на всякую плоть, и будут пророчествовать сыны ваши и дочери ваши; и юноши ваши будут видеть видения, и старцы ваши сновидениями вразумляемы будут.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И на рабов Моих и на рабынь Моих в те дни излию от Духа Моего, и будут пророчествовать.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И покажу чудеса на небе вверху и знамения на земле внизу, кровь и огонь и курение дыма.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Солнце превратится во тьму, и луна – в кровь, прежде нежели наступит день Господень, великий и славный.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И будет: всякий, кто призовет имя Господне, спасется.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Мужи Израильские! выслушайте слова сии: Иисуса Назорея, Мужа, засвидетельствованного вам от Бога силами и чудесами и знамениями, которые Бог сотворил через Него среди вас, как и сами знаете,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Сего, по определенному совету и предведению Божию преданного, вы взяли и, пригвоздив руками беззаконных, убили;</div></li>
+				<li class="verse visible-1"><div class="verse-inner">но Бог воскресил Его, расторгнув узы смерти, потому что ей невозможно было удержать Его.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Ибо Давид говорит о Нем: видел я пред собою Господа всегда, ибо Он одесную меня, дабы я не поколебался.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Оттого возрадовалось сердце мое и возвеселился язык мой; даже и плоть моя упокоится в уповании,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">ибо Ты не оставишь души моей в аде и не дашь святому Твоему увидеть тления.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Ты дал мне познать путь жизни, Ты исполнишь меня радостью пред лицем Твоим.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Мужи братия! да будет позволено с дерзновением сказать вам о праотце Давиде, что он и умер и погребен, и гроб его у нас до сего дня.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Будучи же пророком и зная, что Бог с клятвою обещал ему от плода чресл его воздвигнуть Христа во плоти и посадить на престоле его,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Он прежде сказал о воскресении Христа, что не оставлена душа Его в аде, и плоть Его не видела тления.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Сего Иисуса Бог воскресил, чему все мы свидетели.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Итак Он, быв вознесен десницею Божиею и приняв от Отца обетование Святаго Духа, излил то, что вы ныне видите и слышите.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Ибо Давид не восшел на небеса; но сам говорит: сказал Господь Господу моему: седи одесную Меня,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">доколе положу врагов Твоих в подножие ног Твоих.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Итак твердо знай, весь дом Израилев, что Бог соделал Господом и Христом Сего Иисуса, Которого вы распяли.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Услышав это, они умилились сердцем и сказали Петру и прочим Апостолам: что нам делать, мужи братия?</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Петр же сказал им: покайтесь, и да крестится каждый из вас во имя Иисуса Христа для прощения грехов; и полýчите дар Святаго Духа.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Ибо вам принадлежит обетование и детям вашим и всем дальним, кого ни призовет Господь Бог наш.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И другими многими словами он свидетельствовал и увещевал, говоря: спасайтесь от рода сего развращенного.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Итак охотно принявшие слово его крестились, и присоединилось в тот день душ около трех тысяч.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И они постоянно пребывали в учении Апостолов, в общении и преломлении хлеба и в молитвах.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Был же страх на всякой душе; и много чудес и знамений совершилось через Апостолов в Иерусалиме.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">Все же верующие были вместе и имели всё общее.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И продавали имения и всякую собственность, и разделяли всем, смотря по нужде каждого.</div></li>
+				<li class="verse visible-1"><div class="verse-inner">И каждый день единодушно пребывали в храме и, преломляя по домам хлеб, принимали пищу в веселии и простоте сердца,</div></li>
+				<li class="verse visible-1"><div class="verse-inner">хваля Бога и находясь в любви у всего народа. Господь же ежедневно прилагал спасаемых к Церкви.</div></li>
+					</ul>
+		</td>
+			<td id="column-lang-g" class="column col-lang-g col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-g" type="checkbox" name="g" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-g" class="lang-label">Греческий</label>
+		</div>
+		<ul id="list-verses-g" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-l" class="column col-lang-l col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-l" type="checkbox" name="l" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-l" class="lang-label">Латинский</label>
+		</div>
+		<ul id="list-verses-l" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-a" class="column col-lang-a col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-a" type="checkbox" name="a" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-a" class="lang-label">Английский (NKJV)</label>
+		</div>
+		<ul id="list-verses-a" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-n" class="column col-lang-n col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-n" type="checkbox" name="n" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-n" class="lang-label">Арабский</label>
+		</div>
+		<ul id="list-verses-n" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-s" class="column col-lang-s col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-s" type="checkbox" name="s" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-s" class="lang-label">Киргизский</label>
+		</div>
+		<ul id="list-verses-s" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-p" class="column col-lang-p col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-p" type="checkbox" name="p" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-p" class="lang-label">Таджикский</label>
+		</div>
+		<ul id="list-verses-p" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-t" class="column col-lang-t col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-t" type="checkbox" name="t" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-t" class="lang-label">Татарский</label>
+		</div>
+		<ul id="list-verses-t" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-o" class="column col-lang-o col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-o" type="checkbox" name="o" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-o" class="lang-label">Узбекский</label>
+		</div>
+		<ul id="list-verses-o" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-k" class="column col-lang-k col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-k" type="checkbox" name="k" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-k" class="lang-label">Украинский (Огиенко)</label>
+		</div>
+		<ul id="list-verses-k" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-h" class="column col-lang-h col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-h" type="checkbox" name="h" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-h" class="lang-label">Французский (LSG)</label>
+		</div>
+		<ul id="list-verses-h" class="verses">
+			</ul>
+		</td>
+			<td id="column-lang-m" class="column col-lang-m col-visible-0 has-switcher-0">
+		<div class="column-header">
+					<input id="cb-m" type="checkbox" name="m" onchange="langs( ).toggle( '?Act.2&amp;ucs' );" checked="checked"/>
+			<label for="cb-m" class="lang-label">Die Gute Nachricht Bibel</label>
+		</div>
+		<ul id="list-verses-m" class="verses">
+			</ul>
+		</td>
+	</tr></table></div>
+<div class="divider"><img src="http://azbyka.ru/biblia/img/divider.gif" alt=""/></div>
+<div class="footer">
+<a href="/hristianstvo/bibliya">О Библии</a> • <a href="/tserkov/duhovnaya_zhizn/duhovnoe_chtenie">Как читать Библию</a> • 
+<a href="/hristianstvo/bibliya/tolkovanie">Толкования Библии</a> • <a href="http://azbyka.ru/fiction/1/probatov-vasilij/">Библия в стихах</a> •<br/>
+<a href="/biblia/UBS/index.htm">Библия на греческом языке с подстрочным переводом</a> •<br/>
+<a href="/days/">Ежедневные видеотолкования Священного Писания</a><br/>
+<a href="/tserkov/tserkovno-slavyanskiy/uchebnye_posobiya/">Учебные пособия по церковнославянскому языку</a><br/>
+<a href="/biblia/instruction.htm">Библейские ссылки на вашем сайте</a><br/>
+Скачать Библию в формате:
+<a title="MOBI &ndash; один из первых форматов. Используется Amazon Kindle и многими другими ридерами." rel="nofollow" href="misc/bibliya.mobi" class="download">mobi</a>
+<a title="FB2 &ndash; особенно популярен в России, стандарт многих электронных библиотек." rel="nofollow" href="misc/bibliya.fb2" class="download">fb2</a>
+<a title="PDF &ndash; кроссплатформенный формат электронных документов. Для просмотра можно использовать официальную бесплатную программу Adobe Reader, а также программы сторонних разработчиков. Документ в этом формате позволяет распечатать труд на принтере целиком." rel="nofollow" href="misc/bibliya.pdf" class="download">pdf</a>
+<a title="Файл DOC &ndash; документ Microsoft Word &ndash; популярной программы для работы с текстами. Файлы формата DOC содержат самую разную информацию о форматировании текста &ndash; шрифты, их начертание, выравнивание текста, отступы, абзацы, списки, колонки и т.д. " rel="nofollow" href="misc/bibliya.doc" class="download">.doc</a>
+<a title="PDF &ndash; кроссплатформенный формат электронных документов. Для просмотра можно использовать официальную бесплатную программу Adobe Reader, а также программы сторонних разработчиков. Документ в этом формате позволяет распечатать труд на принтере целиком." rel="nofollow" href="misc/nz.pdf" class="download" style="width: 90px;">Новый Завет</a>
+<div class="audio-link"><a href="/audio/category/svyashhennoe-pisanie">Аудиобиблия <img src="http://azbyka.ru/biblia/img/audio.png" alt=""/></a></div>
+</div> 
+<!--noindex-->
+<!--Google-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-12794142-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--/Google-->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter5565880 = new Ya.Metrika({id:5565880,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/5565880" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!--/noindex--><!--LiveInternet counter-->
+    <!--noindex--><script type="text/javascript"><!--
+new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+
+";"+Math.random();//--></script>
+    <!--/noindex-->
+    <!--/LiveInternet--><!--noindex-->
+
+<!-- begin of Top100 logo -->
+<a rel="nofollow" href="//top100.rambler.ru/home?id=1049193">
+<img src="http://azbyka.ru/design/rambler-top100.jpg" alt="Rambler's Top100" style="width:88px;height:31px;border:0px;" /></a>
+<!-- end of Top100 logo -->
+<!-- begin of Top100 code --> 
+<script id="top100Counter" type="text/javascript" src="//counter.rambler.ru/top100.jcn?1049193"></script><noscript>
+<img src="//counter.rambler.ru/top100.cnt?1049193" alt="Топ100" style="width:1px;height:1px;border:0px;"></noscript>
+<!-- end of Top100 code -->
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">//<![CDATA[
+var _tmr = _tmr || [];
+_tmr.push({id: "1188435",  type: "pageView", start: (new Date()).getTime()});
+(function (d, w) {
+   var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true;
+   ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+   var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+   if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window);
+//]]></script><noscript><div style="position:absolute;left:-10000px;">
+<img src="//top-fwz1.mail.ru/counter?id=1188435;js=na" style="border:0;width:1px;height:1px;" height="1" width="1" alt="Рейтинг@Mail.ru" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter -->
+<!-- Rating@Mail.ru logo -->
+<a rel="nofollow" href="//top.mail.ru/jump?from=1188435">
+<img src="//top-fwz1.mail.ru/counter?id=1188435;t=317;l=1" 
+style="border:0;width:88px;height:15px;" alt="Рейтинг@Mail.ru" /></a>
+<!-- //Rating@Mail.ru logo -->
+
+
+
+<!--/noindex--><a href="http://azbyka.ru/biblia?Act.2&amp;ucs&mobile" class="mobile-link">Мобильная версия сайта</a>
+
+<div id="share-popup">
+	<div class="social">
+		<p>Поделиться ссылкой на выделенное</p>
+		<ul>
+			<li><a href="#" class="tw"><span></span>Twitter</a></li>
+			<li><a href="#" class="fb"><span></span>Facebook</a></li>
+			<li><a href="#" class="vk"><span></span>Вконтакте</a></li>
+			<li><a href="#" class="gp"><span></span>Google+</a></li>
+		</ul>
+	</div>
+	<div class="link">
+		<p>Прямая ссылка:</p>
+		<a href="" class="linkmasha" ><ins></ins></a>
+		<span>Нажмите правой клавишей мыши и выберите «Копировать ссылку»</span>
+	</div>
+</div>
+ 
+</div></body></html>
